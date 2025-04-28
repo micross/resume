@@ -1,4 +1,4 @@
-import type { ISetterMap } from '@/pages/createTemplate/types/IHJNewSchema';
+import type { ISetterMap } from '~/interface/IHJNewSchema';
 import hjInput from './hj-input.vue';
 import hjAvatar from './hj-avatar.vue';
 import hjSelect from './hj-select.vue';

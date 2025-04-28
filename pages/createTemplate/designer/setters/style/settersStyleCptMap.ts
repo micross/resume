@@ -1,4 +1,4 @@
-import type { ISetterMap } from '@/pages/createTemplate/types/IHJNewSchema';
+import type { ISetterMap } from '~/interface/IHJNewSchema';
 
 import width from './width.vue';
 import height from './height.vue';

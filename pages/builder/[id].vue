@@ -37,7 +37,6 @@ import NavBar from './components/NavBar.vue';
 import { storeToRefs } from 'pinia';
 import { closeGlobalLoading, getUuid } from '@/utils/common';
 import pageSchemas from '../createTemplate/designer/schema/pageSchema';
-import { useRoute } from 'vue-router';
 import ResumeRender from '../createTemplate/designer/components/ResumeRender.vue';
 import PageEditorList from './components/PageEditorList.vue';
 import { exportPdfNew, exportPNGNew } from '@/utils/pdf';

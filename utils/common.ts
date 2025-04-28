@@ -1,6 +1,5 @@
 import cuid2 from '@paralleldrive/cuid2';
 import dayjs from 'dayjs';
-import * as imageConversion from 'image-conversion'; // 图片压缩
 import { cloneDeep } from 'lodash';
 import { useLoadingStore } from '~/store/loading';
 // 工具方法--px转数字
@@ -168,22 +167,6 @@ export const downloadFileUtil = (url: string) => {
   }
   window.open(url, '_self');
   return true;
-};
-
-// 压缩文件
-export const compressFile = (file: File, mag: number) => {
-  return new Promise(async (resolve, reject) => {
-    const res = await imageConversion.compress(file, mag); // 压缩图片
-    // blob 转file
-    const files = new window.File([res], file.name, {
-      type: file.type
-    });
-    if (files) {
-      resolve(files);
-    } else {
-      reject(null);
-    }
-  });
 };
 
 function getTs(time: any) {

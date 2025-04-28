@@ -1,4 +1,4 @@
-import type { ISetterMap } from '@/pages/createTemplate/types/IHJNewSchema';
+import type { ISetterMap } from '~/interface/IHJNewSchema';
 
 import title from './title.vue';
 import name from './name.vue';

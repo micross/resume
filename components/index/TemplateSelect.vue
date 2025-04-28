@@ -24,7 +24,6 @@
 <script setup lang="ts">
 import TemplateCardNew from '@/components/TemplateCardNew/TemplateCardNew.vue';
 import IntroduceTitleVue from './IntroduceTitle.vue';
-import { useRouter } from 'vue-router';
 import { onUnmounted, ref } from 'vue';
 import SkeletonCard from '@/components/SkeletonCard/SkeletonCard.vue';
 import { storeToRefs } from 'pinia';

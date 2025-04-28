@@ -58,7 +58,6 @@
 import ResumePreview from '@/components/resume/ResumePreview.vue';
 import { storeToRefs } from 'pinia';
 import { openGlobalLoading } from '@/utils/common';
-import { useHead } from '@vueuse/head';
 import { useCreateTemplateStore } from '~/store/createTemplate';
 import { useTemplateDetail, useTemplates } from '~/composables/templates';
 

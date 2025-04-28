@@ -32,7 +32,6 @@ import {
 import CategoryVue from '@/components/word/WordCategory.vue';
 import TemplateListVue from '@/components/word/WordList.vue';
 import CommonLoading from '@/components/CommonLoading/CommonLoading.vue';
-import { useHead } from '@vueuse/head';
 
 useHead({
   title: 'Word简历模版下载',

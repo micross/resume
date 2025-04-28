@@ -92,7 +92,6 @@ import {
 import { downloadFileUtil } from '@/utils/common';
 import { useUserIsPayGoods } from '~/composables/useUsrIsPayGoods';
 import { storeToRefs } from 'pinia';
-import { useHead } from '@vueuse/head';
 import { useMembershipStore } from '~/store/membership';
 import { ElMessage } from 'element-plus';
 import { useUserInfoStore } from '~/store/user';

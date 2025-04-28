@@ -105,7 +105,6 @@ import {
 } from '~/composables/api/pptTemplate';
 import { useUserIsPayGoods } from '~/composables/useUsrIsPayGoods';
 import { storeToRefs } from 'pinia';
-import { useHead } from '@vueuse/head';
 import { useMembershipStore } from '~/store/membership';
 import { ElMessage } from 'element-plus';
 import { useUserInfoStore } from '~/store/user';
@@ -129,7 +128,6 @@ const getPPTTemplateInfo = async () => {
   useHead({
     title: pptInfo.value.name
   });
-
 };
 getPPTTemplateInfo();
 

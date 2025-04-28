@@ -1,4 +1,4 @@
-import type { IModulesList } from '../../types/IHJNewSchema';
+import type { IModulesList } from '@/interface/IHJNewSchema';
 import base_info from './modules/base_info';
 import job_intention from './modules/job_intention';
 import resume_title from './modules/resume_title';

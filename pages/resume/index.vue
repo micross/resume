@@ -20,7 +20,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useHead } from '@vueuse/head';
 import { useTemplates } from '~/composables/templates';
 useHead({
   meta: [

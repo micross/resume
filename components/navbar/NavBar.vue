@@ -36,8 +36,12 @@
       <!-- 登录注册以及用户展示区域 -->
       <div class="user-box">
         <div v-if="!useUserInfoStore().userInfo" class="logon-register-box">
-          <RegisterDialog />
-          <LoginDialog />
+          <NuxtLink to="/auth/login">
+            <el-button type="primary" size="small" class="login-btn">登录</el-button>
+          </NuxtLink>
+          <NuxtLink to="/auth/register">
+            <el-button type="primary" size="small" class="register-btn">注册</el-button>
+          </NuxtLink>
         </div>
         <div v-else :class="[
           'user-avatar-box',

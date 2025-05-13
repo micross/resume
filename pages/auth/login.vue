@@ -23,13 +23,9 @@
 
 <script lang="ts" setup>
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus';
-import { useWebsiteConfigStore } from '~/store/websiteConfig';
 import { useRefreshStore } from '~/store/refresh';
-import { useUserInfoStore } from '~/store/user';
 import { useLogin } from '~/composables/auth';
-
 const router = useRouter();
-const { websiteConfig } = useWebsiteConfigStore();
 
 // 登录数据
 interface IForm {
@@ -69,7 +65,6 @@ const loginRules = reactive<FormRules>({
 
 // 登录
 const { setUuid } = useRefreshStore();
-const { getUserIntegralTotal } = useUserInfoStore();
 const { login, loading } = useLogin();
 const loginRuleFormRef = ref<FormInstance>();
 
@@ -83,8 +78,6 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
         message: '登录成功',
         type: 'success'
       });
-      // 查询和更新用户信息
-      const { getAndUpdateUserInfo } = useUserInfoStore();
       router.push('/');
     }
   });

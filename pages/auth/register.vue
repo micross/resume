@@ -30,10 +30,8 @@
 <script lang="ts" setup>
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus';
 import { registerAsync } from '~/composables/api/user';
-import { useWebsiteConfigStore } from '~/store/websiteConfig';
 
 const router = useRouter();
-const { websiteConfig } = useWebsiteConfigStore();
 
 // 邮箱自定义校验规则
 const emailValidator = (rule: any, value: string, callback: Function) => {

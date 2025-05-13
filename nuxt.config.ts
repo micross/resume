@@ -1,9 +1,12 @@
+import tailwindcss from "@tailwindcss/vite";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-04-28',
   devtools: { enabled: false },
-  modules: ['@pinia/nuxt', '@element-plus/nuxt', 'nuxt-lucide-icons'],
+  modules: ['@pinia/nuxt', '@element-plus/nuxt', 'nuxt-lucide-icons', 'shadcn-nuxt'],
   css: [
+    '~/assets/css/tailwind.css',
     'element-plus/theme-chalk/el-scrollbar.css' // 必须引入样式
   ],
   components: [
@@ -39,9 +42,18 @@ export default defineNuxtConfig({
         }
       ],
       script: [
-				{ src: '/iconfont/iconfont.js', type: "text/javascript" }
-			]
+                { src: '/iconfont/iconfont.js', type: "text/javascript" }
+            ]
     }
+  },
+  vite: {
+    plugins: [
+      tailwindcss(),
+    ],
+  },
+  shadcn: {
+    prefix: '',
+    componentDir: './components/ui'
   },
   nitro: {
     preset: 'bun'

@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/vue-query";
 import type { Link } from "~/lib/schema/link";
 
 export const fetchLinks = async () => {
-    const response = await useAPI.get<Link[]>("/links");
+    const response = await useAPI.get<Link[]>("/resume/links");
 
     return response;
 };

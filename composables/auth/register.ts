@@ -5,7 +5,7 @@ import { useAuthStore } from "~/store/auth";
 
 export const register = async (data: RegisterDto) => {
   const response = await useAPI.post<AuthResponseDto>(
-    "/user/register",
+    "/resume/user/register",
     data,
   );
 

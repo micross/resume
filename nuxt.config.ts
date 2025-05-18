@@ -4,7 +4,13 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
   compatibilityDate: '2025-04-28',
   devtools: { enabled: false },
-  modules: ['@pinia/nuxt', '@element-plus/nuxt', 'nuxt-lucide-icons', 'shadcn-nuxt'],
+  modules: [
+    '@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt',
+    '@element-plus/nuxt',
+    'nuxt-lucide-icons',
+    'shadcn-nuxt'
+  ],
   css: [
     '~/assets/css/tailwind.css',
     'element-plus/theme-chalk/el-scrollbar.css' // 必须引入样式
@@ -42,8 +48,8 @@ export default defineNuxtConfig({
         }
       ],
       script: [
-                { src: '/iconfont/iconfont.js', type: "text/javascript" }
-            ]
+        { src: '/iconfont/iconfont.js', type: "text/javascript" }
+      ]
     }
   },
   vite: {

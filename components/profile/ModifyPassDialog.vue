@@ -109,7 +109,7 @@ import { useUserInfoStore } from '~/store/user';
   const sureLoading = ref<boolean>(false);
   const ruleFormRef = ref<FormInstance>();
   const router = useRouter();
-  const { saveUserInfo } = useUserInfoStore();
+  const { setUser } = useUserInfoStore();
   const submit = async (formEl: FormInstance | undefined) => {
     if (!formEl) return;
     await formEl.validate(async (valid, fields) => {
@@ -126,7 +126,7 @@ import { useUserInfoStore } from '~/store/user';
           sureLoading.value = false;
           useState('token').value = '';
           useState('userInfo').value = '';
-          saveUserInfo('');
+          setUser(null);
           router.push('/');
           emit('cancle');
         } else {

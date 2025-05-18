@@ -22,17 +22,13 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { getUserInfoAsync, resendVerificationAsync } from '~/composables/api/user';
+  import { resendVerificationAsync } from '~/composables/api/user';
   import { ElMessage } from 'element-plus';
+import { useMe } from '~/composables/users';
   const route = useRoute();
   let email: string = route.query.email as string;
   // 查询邮箱是否验证通过
   const isValid = ref<boolean>(false);
-  const getUserInfo = async () => {
-    const data = await getUserInfoAsync();
-      isValid.value = data.email_verified_at !== null;
-  };
-  getUserInfo();
 
   // 重新发送邮件验证链接
   const sendText = ref<string>('重新发送邮件');

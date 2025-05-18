@@ -64,7 +64,6 @@ const formattedIntegral = computed(() => {
 // 是否等待
 const isLoading = ref(false);
 
-const { getAndUpdateUserInfo } = useUserInfoStore();
 const streamController = ref<AbortController | null>(null); // 流式请求控制器
 const aiContent = ref('');
 const renderedContent = computed(() => {
@@ -112,7 +111,6 @@ const handleOpen = () => {
       console.log('AI诊断失败', error);
     },
     () => {
-      getAndUpdateUserInfo();
       if (props.modelInfoObj.selectedModel) {
         // 手动更新用户简币数量
         useUserInfoStore().userIntegralInfo.integralTotal =

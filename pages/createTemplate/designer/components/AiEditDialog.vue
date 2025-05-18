@@ -125,7 +125,6 @@ const selectedModel = ref<string>(''); // 选中的模型
 const streamController = ref<AbortController | null>(null); // 流式请求控制器
 const modelList = ref<string[]>([]); // 模型列表
 const payValue = ref<number>(0); // 消费简币数量
-const { getAndUpdateUserInfo } = useUserInfoStore();
 
 // 默认模型
 const defaultModel = computed(() => (selectedModel.value ? selectedModel.value : ''));
@@ -236,7 +235,6 @@ const aiEdit = async () => {
     },
     () => {
       aiLoading.value = false;
-      getAndUpdateUserInfo();
       if (defaultModel.value) {
         // 手动更新用户简币数量
         useUserInfoStore().userIntegralInfo.integralTotal =

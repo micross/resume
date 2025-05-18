@@ -35,7 +35,7 @@
       </div>
       <!-- 登录注册以及用户展示区域 -->
       <div class="user-box">
-        <div v-if="!useUserInfoStore().userInfo" class="logon-register-box">
+        <div v-if="!useUserInfoStore().user" class="logon-register-box">
           <NuxtLink to="/auth/login">
             <el-button type="primary" size="small" class="login-btn">登录</el-button>
           </NuxtLink>
@@ -53,10 +53,10 @@
           </div>
           <el-dropdown v-config:open_person_in :teleported="false">
             <span class="el-dropdown-link">
-              <el-avatar v-if="useUserInfoStore().userInfo.avatar" :size="45"
-                :src="useUserInfoStore().userInfo.avatar" alt="用户头像" title="用户个人头像" />
+              <el-avatar v-if="useUserInfoStore().user.avatar" :size="45"
+                :src="useUserInfoStore().user.avatar" alt="用户头像" title="用户个人头像" />
               <el-avatar v-else :size="45">
-                {{ useUserInfoStore().userInfo.name }}
+                {{ useUserInfoStore().user.name }}
               </el-avatar>
             </span>
             <template #dropdown>
@@ -137,15 +137,15 @@ const toMyIntegral = () => {
 };
 
 // 退出登录
-const { saveUserInfo } = useUserInfoStore();
+const { setUser } = useUserInfoStore();
 const { setUuid } = useRefreshStore();
 const { saveIntegralInfo } = useUserInfoStore();
 const { saveMembershipInfo } = useMembershipStore();
 const loginout = () => {
-  saveUserInfo(''); // 清除用户信息
   saveIntegralInfo(''); // 清除用户简币信息
   saveMembershipInfo(''); // 清除会员信息
   setUuid(); // 全局刷新
+  setUser(null);
   router.push('/');
 };
 

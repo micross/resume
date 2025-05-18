@@ -1,6 +1,6 @@
 import { AuthResponseDto, LoginDto } from "~/lib/dto";
 import { useMutation } from "@tanstack/vue-query";
-import { useAuthStore } from "~/store/auth";
+import { fetchMe } from "../users";
 import { useUserInfoStore } from "~/store/user";
 
 export const login = async (data: LoginDto) => {
@@ -25,14 +25,12 @@ export const useLogin = () => {
         return;
       }
 
-      const { saveUserInfo } = useUserInfoStore();
-
-      saveUserInfo(data.user); // 存储用户信息
-      useAuthStore().setUser(data.user);
-
       const cookie = useCookie('token')
       cookie.value = data.token
-      queryClient.setQueryData(["user"], data.user);
+
+      const { setUser } = useUserInfoStore();
+      const me  = await fetchMe();
+      setUser(me);
     }
   });
 

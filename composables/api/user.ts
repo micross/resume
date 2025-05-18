@@ -25,12 +25,6 @@ export const sendCodeAsync: any = async (data: any) => {
   return response;
 };
 
-// 查询用户信息
-export const getUserInfoAsync: any = async () => {
-  const response = await useAPI.get(`/user/me`);
-  return response;
-};
-
 // 重新发送邮件链接
 export const resendVerificationAsync: any = async (email: string) => {
   const response = await useAPI.get(`/auth/email/resend-verification/${email}`);

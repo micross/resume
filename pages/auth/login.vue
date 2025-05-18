@@ -10,8 +10,8 @@
           <el-input v-model="loginForm.password" type="password" class="forms_field-input" placeholder="密码" @keyup.enter="handleLogin(loginRuleFormRef)" />
         </el-form-item>
         <div class="form-actions">
-          <el-link type="primary" @click="toForgetPassword">忘记密码？</el-link>
-          <el-link type="primary" @click="toRegister">注册账号</el-link>
+          <NuxtLink type="primary" to="/forget-password">忘记密码？</NuxtLink>
+          <NuxtLink type="primary" to="/auth/register">注册账号</NuxtLink>
         </div>
         <el-form-item>
           <el-button type="primary" class="submit-btn" :loading="loading" @click="handleLogin(loginRuleFormRef)">登 录</el-button>
@@ -23,8 +23,9 @@
 
 <script lang="ts" setup>
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus';
-import { useRefreshStore } from '~/store/refresh';
 import { useLogin } from '~/composables/auth';
+import { useMe } from '~/composables/users';
+import { useUserInfoStore } from '~/store/user';
 const router = useRouter();
 
 // 登录数据
@@ -64,7 +65,6 @@ const loginRules = reactive<FormRules>({
 });
 
 // 登录
-const { setUuid } = useRefreshStore();
 const { login, loading } = useLogin();
 const loginRuleFormRef = ref<FormInstance>();
 
@@ -73,7 +73,6 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
   await formEl.validate(async (valid, fields) => {
     if (valid) {
       await login(loginForm);
-      setUuid(); // 无感刷新页面
       ElMessage({
         message: '登录成功',
         type: 'success'
@@ -83,15 +82,6 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
   });
 };
 
-// 跳转到忘记密码页面
-const toForgetPassword = () => {
-  router.push('/forget-password');
-};
-
-// 跳转到注册页面
-const toRegister = () => {
-  router.push('/auth/register');
-};
 </script>
 
 <style lang="scss" scoped>

@@ -35,7 +35,7 @@ definePageMeta({
   layout: 'profile'
 })
 
-const form = reactive(useUserInfoStore().userInfo);
+const form = reactive(useUserInfoStore().user);
 
 // 修改密码弹窗
 const dialogVisible = ref<boolean>(false);

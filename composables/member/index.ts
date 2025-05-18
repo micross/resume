@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/vue-query";
 import type { MemberType } from "~/lib/schema/member";
 
 export const fetchMemberTypes = async () => {
-    const response = await useAPI.get<MemberType[]>("/member-type");
+    const response = await useAPI.get<MemberType[]>("/resume/member-type");
     return response;
 };
 

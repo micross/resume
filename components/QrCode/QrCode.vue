@@ -1,7 +1,7 @@
 <template>
   <div ref="qrCodeDomRef" class="qr-code-box">
     <h1>红黄简历简历</h1>
-    <p>{{ useUserInfoStore().userInfo.name }}</p>
+    <p>{{ useUserInfoStore().user.name }}</p>
     <qrcode-vue :value="value" :size="size" level="H" :foreground="foreground" />
   </div>
 </template>

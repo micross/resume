@@ -17,7 +17,7 @@
         </el-form-item>
         <div class="form-actions">
           <span></span>
-          <el-link type="primary" @click="toLogin">已有账号？立即登录</el-link>
+          <NuxtLink type="primary" to="/auth/login">已有账号？立即登录</NuxtLink>
         </div>
         <el-form-item>
           <el-button type="primary" class="submit-btn" :loading="isRegisterLoading" @click="handleRegister(registerRuleFormRef)">注 册</el-button>
@@ -124,10 +124,6 @@ const handleRegister = async (formEl: FormInstance | undefined) => {
   });
 };
 
-// 跳转到登录页面
-const toLogin = () => {
-  router.push('/auth/login');
-};
 </script>
 
 <style lang="scss" scoped>

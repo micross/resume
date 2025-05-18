@@ -4,10 +4,10 @@
     <div class="avatar-box">
       <el-upload class="person-avatar-uploader" :action="uploadAddress()" :headers="{ Authorization: token }"
         :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-        <img v-if="userInfoStore.userInfo?.avatar" :src="userInfoStore.userInfo.avatar"
+        <img v-if="userInfoStore.user?.avatar" :src="userInfoStore.user.avatar"
           class="avatar" />
         <el-avatar v-else :size="70">
-          {{ userInfoStore.userInfo.nickname }}
+          {{ userInfoStore.user.nickname }}
         </el-avatar>
 
         <!-- 相机图标 -->
@@ -36,15 +36,13 @@ const uploadAddress = () => {
 };
 
 const handleAvatarSuccess: UploadProps['onSuccess'] = async (response) => {
-  userInfoStore.userInfo.avatar = response.url;
+  userInfoStore.user.avatar = response.url;
   let params = {
     avatar: response.url
   };
   const data = await updateUserAvatarAsync(params);
   if (data.data.status === 200) {
     ElMessage.success('更新成功');
-    // 更新用户信息
-    userInfoStore.getAndUpdateUserInfo();
   } else {
     ElMessage.error(data.data.message);
   }

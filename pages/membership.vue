@@ -9,10 +9,10 @@
       <!-- 头部区域 -->
       <div class="head">
         <div class="left">
-          <el-avatar v-if="userInfoStore.userInfo.avatar" :size="43" :src="userInfoStore.userInfo.avatar" />
+          <el-avatar v-if="userInfoStore.user.avatar" :size="43" :src="userInfoStore.user.avatar" />
           <div class="membership-time">
             <div class="user-info-box">
-              <h1>{{ useUserInfoStore().userInfo.name }}</h1>
+              <h1>{{ useUserInfoStore().user.name }}</h1>
               <div v-if="!membershipInfo.hasMembership" class="not-membership-img"></div>
               <div v-else-if="membershipInfo.hasMembership && membershipInfo.daysRemaining > 0" class="content-box">
                 <span v-if="membershipInfo.type === 'lifetime'">永久会员</span>
@@ -159,10 +159,6 @@ const selectPayWay = (type: string) => {
   payType.value = type;
 };
 
-// 查询和更新用户信息
-
-userInfoStore.getAndUpdateUserInfo();
-
 // 获取用户会员信息
 const { membershipInfo } = storeToRefs(useMembershipStore());
 
@@ -196,7 +192,6 @@ const getOrderQrcode = async () => {
 // 支付成功
 const handlePaySuccess = () => {
   dialogQrcodeVisible.value = false;
-  userInfoStore.getAndUpdateUserInfo();
   emit('paySuccess');
 };
 

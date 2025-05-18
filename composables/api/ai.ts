@@ -2,43 +2,43 @@
 
 // 查询AI模型列表
 export const aiModelListAsync: any = async (params: any) => {
-  const response = await useAPI.get(`/ai/getModelList`, params);
+  const response = await useAPI.get(`/resume/ai/getModelList`, params);
   return response;
 };
 
 // 新增模型
 export const addModelAsync: any = async (data: any) => {
-  const response = await useAPI.post(`/ai/addModel`, data);
+  const response = await useAPI.post(`/resume/ai/addModel`, data);
   return response;
 };
 
 // 修改模型
 export const updateModelAsync: any = async (data: any) => {
-  const response = await useAPI.post(`/ai/updateIntegralPayConfig`, data);
+  const response = await useAPI.post(`/resume/ai/updateIntegralPayConfig`, data);
   return response;
 };
 
 // 删除模型
 export const deleteModelAsync: any = async (id: string) => {
-  const response = await useAPI.delete(`/ai/deleteModel/${id}`);
+  const response = await useAPI.delete(`/resume/ai/deleteModel/${id}`);
   return response;
 };
 
 // AI润色
 export const polishTextAsync: any = async (data: any) => {
-  const response = await useAPI.post(`/ai/polishText`, data);
+  const response = await useAPI.post(`/resume/ai/polishText`, data);
   return response;
 };
 
 // AI创作
 export const createTextAsync: any = async (data: any) => {
-  const response = await useAPI.post(`/ai/createText`, data);
+  const response = await useAPI.post(`/resume/ai/createText`, data);
   return response;
 };
 
 // AI翻译
 export const translateTextAsync: any = async (data: any) => {
-  const response = await useAPI.post(`/ai/translate`, data);
+  const response = await useAPI.post(`/resume/ai/translate`, data);
   return response;
 };
 

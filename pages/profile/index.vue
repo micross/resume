@@ -17,16 +17,16 @@
       </el-form-item>
       <el-form-item label="昵称:" prop="name">
         <el-input v-if="isEdit" v-model="ruleForm.name" />
-        <p v-else>{{ useUserInfoStore().userInfo.name }}</p>
+        <p v-else>{{ useUserInfoStore().user.name }}</p>
       </el-form-item>
       <el-form-item label="个性签名:" prop="surname">
         <el-input v-if="isEdit" v-model="ruleForm.surname" />
-        <p v-else>{{ useUserInfoStore().userInfo.surname }}</p>
+        <p v-else>{{ useUserInfoStore().user.surname }}</p>
       </el-form-item>
       <el-form-item label="生日:" prop="birthdaydate">
         <el-date-picker v-if="isEdit" v-model="ruleForm.birthdaydate" type="date" placeholder="请选择你的生日"
           style="width: 100%" />
-        <p v-else>{{ formatDateToYMD(useUserInfoStore().userInfo.birthdaydate) }}</p>
+        <p v-else>{{ formatDateToYMD(useUserInfoStore().user.birthdaydate) }}</p>
       </el-form-item>
     </el-form>
     <el-divider>
@@ -70,9 +70,6 @@ const rules = reactive<FormRules>({
   birthdaydate: [{ required: true, message: '请选择您的生日', trigger: 'change' }]
 });
 
-// 查询用户信息
-const { getAndUpdateUserInfo } = useUserInfoStore();
-getAndUpdateUserInfo();
 
 // 获取用户会员信息
 const { membershipInfo } = storeToRefs(useMembershipStore());
@@ -80,9 +77,9 @@ const { membershipInfo } = storeToRefs(useMembershipStore());
 // 点击编辑
 const isEdit = ref<boolean>(false);
 const edit = () => {
-  ruleForm.name = useUserInfoStore().userInfo.name;
-  ruleForm.surname = useUserInfoStore().userInfo.surname;
-  ruleForm.birthdaydate = useUserInfoStore().userInfo.birthdaydate;
+  ruleForm.name = useUserInfoStore().user.name;
+  ruleForm.surname = useUserInfoStore().user.surname;
+  ruleForm.birthdaydate = useUserInfoStore().user.birthdaydate;
   isEdit.value = true;
 };
 
@@ -110,7 +107,6 @@ const submit = async (formEl: FormInstance | undefined) => {
         ElMessage.success('更新成功');
         isEdit.value = false;
         submitLoading.value = false;
-        getAndUpdateUserInfo(); // 查询用户信息
       } else {
         ElMessage.error(data.data.message);
         submitLoading.value = false;

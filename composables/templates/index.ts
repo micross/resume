@@ -3,7 +3,7 @@ import type { Template } from "~/lib/schema/template";
 import { useCreateTemplateStore } from "~/store/createTemplate";
 
 export const fetchTemplates = async () => {
-    const response = await useAPI.get<Template[]>("/templates");
+    const response = await useAPI.get<Template[]>("/resume/templates");
     return response;
 };
 
@@ -22,7 +22,7 @@ export const useTemplates = () => {
 
 
 export const fetchTemplateDetail = async (data: { id: string }) => {
-    const response = await useAPI.get<Template>(`/templates/${data.id}`);
+    const response = await useAPI.get<Template>(`/resume/templates/${data.id}`);
     return response;
 };
 
@@ -45,7 +45,7 @@ export const useTemplateDetail = (id: string) => {
 };
 
 export const fetchUserTemplateDetail = async (data: { id: string }) => {
-    const response = await useAPI.get<Template>(`/user-templates/${data.id}`);
+    const response = await useAPI.get<Template>(`/resume/user-templates/${data.id}`);
     return response;
 };
 

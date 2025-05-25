@@ -45,7 +45,7 @@
     "vue3-colorpicker": "^2.3.0",
     "vue3-count-to": "^1.1.2",
     "vuedraggable": "^4.1.0",
-    "zod": "^3.24.4"
+    "@popperjs/core": "npm:@sxzz/popperjs-es@^2.11.7"
   },
   "private": true,
   "scripts": {

@@ -30,6 +30,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       if (token.value) {
         options.headers.set('Authorization', `Bearer ${token.value}`)
       }
+      options.headers.set('x-api-version', 'v2')
     },
     onResponse({ response }) {
       if (response.headers.get('content-disposition') && response.status === 200) {

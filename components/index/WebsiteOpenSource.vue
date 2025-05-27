@@ -61,7 +61,7 @@
             <div class="vx-img">
               <img
                 class="bgc-img"
-                src="@/assets/images/vx.jpg"
+                src="@/assets/images/add_friend.png"
                 alt="微信二维码"
                 title="扫描二维码添加微信"
                 loading="lazy"

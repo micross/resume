@@ -13,14 +13,14 @@
       <div class="about-me">
         <h2>社交平台</h2>
         <h3>
-          <a href="https://space.bilibili.com/493520625?spm_id_from=333.1007.0.0" target="_blank"
+          <a href="https://space.bilibili.com/1616001263" target="_blank"
             rel="noopener noreferrer">哔哩哔哩</a>
         </h3>
         <h3>
-          <a href="https://juejin.cn/user/3034307822112798" target="_blank" rel="noopener noreferrer">稀土掘金</a>
+          <a href="https://juejin.cn/user/2905353175184557" target="_blank" rel="noopener noreferrer">稀土掘金</a>
         </h3>
         <h3>
-          <a href="https://www.zhihu.com/people/luhongquan" target="_blank" rel="noopener noreferrer">个人知乎</a>
+          <a href="https://www.zhihu.com/people/tinlike" target="_blank" rel="noopener noreferrer">个人知乎</a>
         </h3>
       </div>
       <!-- 友情链接 -->
@@ -47,16 +47,8 @@
     <!-- 备案号 -->
     <div class="icp-record-number">
       <p>
-        <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer">蜀ICP备2020034752号-4</a>
+        <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer">粤ICP备19123943号</a>
       </p>
-      <!-- <p>
-        <a
-          target="_blank"
-          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51010802001313"
-          style="display: inline-block; text-decoration: none; height: 20px; line-height: 20px"
-          >川公网安备 51010802001313号</a
-        >
-      </p> -->
     </div>
   </div>
 
@@ -66,21 +58,22 @@
 </template>
 <script setup lang="ts">
 import { useLinks } from '~/composables/links';
+import add_friend from '~/assets/images/add_friend.png';
 
 
 // 查询微信微信群列表
 const vxQunList = ref<any>([
   {
     name: '添加微信',
-    qr_code: 'https://maobucv.com:9000/resume/avatar/wechat-1737546834001.jpg'
+    qr_code: add_friend
   },
   {
     name: '关注公众号',
-    qr_code: 'https://maobucv.com:9000/resume/avatar/wechat-1737546834001.jpg'
+    qr_code: add_friend
   },
   {
     name: '用户交流群',
-    qr_code: 'https://maobucv.com:9000/resume/avatar/wechat-1737546834001.jpg'
+    qr_code: add_friend
   }
 ]);
 

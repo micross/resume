@@ -46,7 +46,10 @@ let params = {
    // ...categoryDom.value.filterValue
   };
 
-const { templates, loading } = useTemplates();
+const { templates, loading } = useTemplates({
+  page: page.value,
+  page_size: limit.value,
+});
 
 // 分类发生变化
 const categoryChange = () => {

@@ -30,7 +30,10 @@ import { storeToRefs } from 'pinia';
 import { useCreateTemplateStore } from '~/store/createTemplate';
 import { useTemplates } from '~/composables/templates';
 
-const { templates, loading } = useTemplates();
+const { templates, loading } = useTemplates({
+  page: 1,
+  page_size: 12
+});
 
 // 跳转至设计页面
 const { selectedModuleId } = storeToRefs(useCreateTemplateStore());

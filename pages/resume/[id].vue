@@ -117,7 +117,10 @@ const toMore = () => {
 
 
 
-const { templates } = useTemplates();
+const { templates } = useTemplates({
+  page: 1,
+  page_size: 12
+});
 
 
 

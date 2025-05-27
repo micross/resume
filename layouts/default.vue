@@ -2,7 +2,6 @@
 import { storeToRefs } from 'pinia';
 import zhCn from 'element-plus/es/locale/lang/zh-cn';
 import { useLoadingStore } from '~/store/loading';
-import { useWebsiteConfigStore } from '~/store/websiteConfig';
 import { ElConfigProvider } from 'element-plus';
 
 useServerSeoMeta({
@@ -13,10 +12,6 @@ useServerSeoMeta({
 });
 
 const { isLoading } = storeToRefs(useLoadingStore());
-
-// 查询网站配置
-const { getWebsiteConfig } = useWebsiteConfigStore();
-getWebsiteConfig();
 </script>
 
 <template>

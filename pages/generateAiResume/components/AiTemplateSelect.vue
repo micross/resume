@@ -34,7 +34,10 @@ const currentPage = ref<number>(1);
 const templateList = ref<any>([]);
 
 const getTemplateList = async () => {
-  const { templates, loading } = useTemplates();
+  const { templates, loading } = useTemplates({
+    page: page.value,
+    page_size: limit.value
+  });
   templateList.value = templates.value;
   loading.value = loading.value;
 };

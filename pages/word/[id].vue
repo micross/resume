@@ -85,7 +85,6 @@
 <script lang="ts" setup>
 import WordCarousel from '@/components/word/WordCarousel.vue';
 import {
-  getWordCategoryListAsync,
   getWordTemplateInfoAsync,
   wordDownloadUrl
 } from '~/composables/api/wordTemplate';
@@ -95,6 +94,7 @@ import { storeToRefs } from 'pinia';
 import { useMembershipStore } from '~/store/membership';
 import { ElMessage } from 'element-plus';
 import { useUserInfoStore } from '~/store/user';
+import { useWordCategories } from '~/composables/words';
 
 // 获取用户会员信息
 const { membershipInfo } = storeToRefs(useMembershipStore());
@@ -120,20 +120,13 @@ const getWordTemplateInfo = async () => {
 getWordTemplateInfo();
 
 // 查询word模板分类列表
-const categoryList = ref<any>({});
-const getWordCategoryList = async () => {
-  const data = await getWordCategoryListAsync();
-  data.forEach((item: any) => {
-    categoryList.value[item.id] = item.name;
-  });
-};
-getWordCategoryList();
+const {categories } = useWordCategories();
 
 // 返回分类名称
 const getCategoryLabel = (id: string) => {
-  console.log('categoryList', categoryList.value);
-  if (categoryList.value) {
-    return categoryList.value[id];
+  console.log('categories', categories);
+  if (categories.value) {
+    return categories.value.find((item: any) => item.id === id)?.name;
   }
 };
 

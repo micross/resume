@@ -7,10 +7,10 @@
           <li
             v-for="(item, index) in categoryList"
             :key="index"
-            :class="[{ active: currentValue === item.category_value }]"
+            :class="[{ active: currentValue === item.name }]"
             @click="handleSelect(item)"
           >
-            {{ item.category_label }}
+            {{ item.name }}
           </li>
         </ul>
       </div>
@@ -43,15 +43,14 @@
   </div>
 </template>
 <script lang="ts" setup>
+import type { Category } from '~/lib/schema/categories';
+
 
   const emit = defineEmits(['getTemplateListByCate']);
 
   defineProps<{
-    categoryList: Array<{
-      category_label: string;
-      category_value: string;
-    }>;
-    tagsList: Array<string>;
+    categoryList: Category[];
+    tagsList: string[];
   }>();
 
   const currentSort = ref<string>(''); // 选中的分类

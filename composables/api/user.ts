@@ -28,12 +28,12 @@ export const resetPasswordAsync: any = async (data: any) => {
 
 // 修改用户头像
 export const updateUserAvatarAsync: any = async (data: any) => {
-  const response = await useAPI.put(`/users/updateAvatar`, data);
+  const response = await useAPI.put(`/resume/users/updateAvatar`, data);
   return response;
 };
 
 // 更新用户个人信息
 export const updatePersonInfoAsync: any = async (data: any) => {
-  const response = await useAPI.put(`/users/updatePersonInfo`, data);
+  const response = await useAPI.put(`/resume/users/updatePersonInfo`, data);
   return response;
 };

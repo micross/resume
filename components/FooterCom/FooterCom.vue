@@ -51,10 +51,6 @@
       </p>
     </div>
   </div>
-
-  <!-- 申请友链弹窗 -->
-  <apply-links-dialog :dialog-apply-links-visible="dialogApplyLinksVisible" @cancle="cancleApplyLinks"
-    @update-success="updateApplyLinksSuccess"></apply-links-dialog>
 </template>
 <script setup lang="ts">
 import { useLinks } from '~/composables/links';
@@ -80,18 +76,6 @@ const vxQunList = ref<any>([
 
 const { links, loading } = useLinks();
 
-
-// 申请友链弹窗
-const dialogApplyLinksVisible = ref<boolean>(false);
-const applyLinks = () => {
-  dialogApplyLinksVisible.value = true;
-};
-const cancleApplyLinks = () => {
-  dialogApplyLinksVisible.value = false;
-};
-const updateApplyLinksSuccess = () => {
-  dialogApplyLinksVisible.value = false;
-};
 </script>
 <style lang="scss" scoped>
 .footer-box {

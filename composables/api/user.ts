@@ -1,14 +1,3 @@
-// 登录
-interface ILogin {
-  email: string;
-  password: string;
-}
-export const loginAsync: any = async (data: ILogin) => {
-  const response = await useAPI.post(`/auth/email_login`, data);
-  return response;
-};
-
-// 注册
 interface IRegister {
   name: string;
   email: string;

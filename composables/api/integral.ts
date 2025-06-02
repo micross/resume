@@ -16,11 +16,6 @@ export const getUserIntegralLogsAsync: any = async (params: any) => {
   return response;
 };
 
-// 用户消费简币
-export const payIntegralLogAsync: any = async (data: any) => {
-  const response = await useAPI.post(`/resume/integral/payIntegralLog`, data);
-  return response;
-};
 
 // 查询用户是否消费过该资源
 export const getUserIsPayGoodsAsync: any = async (params: any) => {

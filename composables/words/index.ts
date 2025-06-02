@@ -3,6 +3,7 @@ import type { PageDto } from "~/lib/dto";
 import type { wordListDto } from "~/lib/dto/word";
 import type { Category } from "~/lib/schema/categories";
 import type { Tag } from "~/lib/schema/tags";
+import type { Word } from "~/lib/schema/word";
 
 export const fetchWordTags = async () => {
     const response = await useAPI.get<Tag[]>("/resume/words/tags");
@@ -56,4 +57,40 @@ export const useWords = (data: PageDto) => {
     });
 
     return { words, loadingWords, error };
+};
+
+export const fetchWordDetail = async (data: { id: string }) => {
+    const response = await useAPI.get<Word>(`/resume/words/detail/${data.id}`);
+    return response;
+};
+
+export const useWordDetail = (id: string) => {
+    const {
+        error,
+        isPending: loading,
+        data: word,
+    } = useQuery({
+        queryKey: ["words", "id"],
+        queryFn: () => fetchWordDetail({id}),
+    });
+
+    return { word, loading, error };
+};
+
+export const fetchWordDownloadUrl = async (data: { id: string }) => {
+    const response = await useAPI.get<Word>(`/resume/words/download/${data.id}`);
+    return response;
+};
+
+export const useWordDownload = (id: string) => {
+    const {
+        error,
+        isPending: loading,
+        data: url,
+    } = useQuery({
+        queryKey: ["words_download", "id"],
+        queryFn: () => fetchWordDownloadUrl({id}),
+    });
+
+    return { url, loading, error };
 };

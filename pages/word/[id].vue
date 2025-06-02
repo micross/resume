@@ -8,7 +8,7 @@
         <div class="img-list-box">
           <ClientOnly>
             <ElScrollbar trigger="hover" style="height: 600px">
-              <div v-for="(item, index) in wordInfo.preview_url" :key="index"
+              <div v-for="(item, index) in word?.preview_url" :key="index"
                 :class="['img-item-box', { active: currentIndex === index }]" @click="selectPreUrl(item, index)">
                 <el-image style="width: 150px; height: 200px" :src="item" fit />
               </div>
@@ -26,25 +26,20 @@
       <div class="right">
         <!-- 操作区 -->
         <div class="top">
-          <h1>{{ wordInfo.name }}</h1>
+          <h1>{{ word?.name }}</h1>
           <div class="download-btn">
             <div class="button" @click="download">
-              <!-- 先判断是否是会员 -->
-              <template v-if="!membershipInfo.hasMembership || membershipInfo.isExpired">
-                <div v-if="!isPay" class="how-much">{{ Math.abs(wordInfo.payValue) || ''
-                  }}<img width="20" src="@/assets/images/jianB.png" alt="简币" /></div>
-              </template>
               <span>立即下载</span>
             </div>
           </div>
           <div class="views-downs-box">
             <div class="icon-box">
               <SvgIcon icon-name="icon-xiazailiang" color="#a3abb1" size="22px"></SvgIcon>
-              <span class="number downloads">{{ wordInfo.downloads }}</span>
+              <span class="number downloads">{{ word?.downloads }}</span>
             </div>
             <div class="icon-box">
               <SvgIcon icon-name="icon-liulanliang1" color="#a3abb1" size="22px"></SvgIcon>
-              <span class="number">{{ wordInfo.views }}</span>
+              <span class="number">{{ word?.views }}</span>
             </div>
           </div>
         </div>
@@ -53,24 +48,24 @@
           <h1>简历信息</h1>
           <div class="profile-box">
             <span class="label">简介</span>
-            <p>{{ wordInfo.profile }}</p>
+            <p>{{ word?.profile }}</p>
           </div>
           <div class="profile-box">
             <span class="label">分类</span>
-            <p v-for="(item, index) in wordInfo.category" :key="index" class="category">{{
+            <p v-for="(item, index) in word?.category" :key="index" class="category">{{
               getCategoryLabel(item)
             }}</p>
           </div>
           <div class="profile-box">
             <span class="label">标签</span>
-            <p v-for="(item, index) in wordInfo.tags" :key="index" class="category">{{ item }}</p>
+            <p v-for="(item, index) in word?.tags" :key="index" class="category">{{ item }}</p>
           </div>
         </div>
       </div>
     </div>
     <div class="bottom-box">
       <!-- 轮播图 -->
-      <word-carousel v-if="wordInfo.preview_url" :preview-url-list="wordInfo.preview_url"></word-carousel>
+      <word-carousel v-if="word?.preview_url" :preview-url-list="word.preview_url"></word-carousel>
     </div>
 
     <!-- 下载警告弹窗 -->
@@ -84,40 +79,18 @@
 </template>
 <script lang="ts" setup>
 import WordCarousel from '@/components/word/WordCarousel.vue';
-import {
-  getWordTemplateInfoAsync,
-  wordDownloadUrl
-} from '~/composables/api/wordTemplate';
 import { downloadFileUtil } from '@/utils/common';
 import { useUserIsPayGoods } from '~/composables/useUsrIsPayGoods';
-import { storeToRefs } from 'pinia';
-import { useMembershipStore } from '~/store/membership';
 import { ElMessage } from 'element-plus';
-import { useUserInfoStore } from '~/store/user';
-import { useWordCategories } from '~/composables/words';
-
-// 获取用户会员信息
-const { membershipInfo } = storeToRefs(useMembershipStore());
+import { useWordCategories, useWordDetail, useWordDownload } from '~/composables/words';
 
 // 获取word模板id
 const route = useRoute();
-const id = route.params.id;
+const id = route.params.id as string;
 const currentIndex = ref<number>(-1); // 选中哪一张预览图
 
 // 查询模板详细信息
-const wordInfo = ref<any>([]);
-const getWordTemplateInfo = async () => {
-  const data = await getWordTemplateInfoAsync(id);
-  wordInfo.value = data;
-  bigPreviewUrl.value = wordInfo.value.preview_url[0];
-  currentIndex.value = 0;
-  // 设置seo
-  useHead({
-    title: wordInfo.value.name
-  });
-
-};
-getWordTemplateInfo();
+const { word, loading} = useWordDetail(id);
 
 // 查询word模板分类列表
 const {categories } = useWordCategories();
@@ -149,28 +122,7 @@ const dialogGetIntegralVisible = ref<boolean>(false);
 const confirmDisabled = ref<boolean>(false);
 const confirmTip = ref<string>('');
 const download = async () => {
-  // 会员直接下载
-  if (membershipInfo.value.hasMembership && !membershipInfo.value.isExpired) {
     downloadTemplate();
-    return;
-  }
-  // 判断用户是否支付过
-  if (isPay.value) {
-    downloadTemplate();
-  } else {
-    // 判断当前用户简币是否充足
-    const userIntegralTotal = useUserInfoStore().userIntegralInfo.integralTotal;
-    if (userIntegralTotal < Math.abs(wordInfo.value.payValue)) {
-      confirmDisabled.value = true;
-      dialogGetIntegralVisible.value = true;
-      confirmTip.value = '您的简币数量不足！';
-      return;
-    } else {
-      confirmTip.value = '';
-      dialogGetIntegralVisible.value = true;
-    }
-  }
-
 };
 
 // 关闭弹窗
@@ -185,12 +137,11 @@ const confirmDialog = () => {
 };
 
 // 下载文件
+
 const downloadTemplate = async () => {
-  const data = await wordDownloadUrl(id);
+  const {url, loading} = useWordDownload(id);
     ElMessage.success('即将开始下载');
-    let url = data[0];
     downloadFileUtil(url);
-    isPay.value = await useUserIsPayGoods(id); // 更新用户是否支付过的状态
 };
 </script>
 <style lang="scss" scoped>

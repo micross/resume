@@ -7,14 +7,14 @@
         <!-- 图片大图展示 -->
         <div class="img-big-preview">
           <div class="big-img-box">
-            <el-image style="width: 100%; height: 440px" :src="bigPreviewUrl" fit />
+            <el-image style="width: 100%; height: 440px" :src="ppt?.preview_url[0]" fit />
           </div>
         </div>
         <!-- 图片列表 -->
         <div class="img-list-box">
           <ClientOnly>
             <ElScrollbar ref="scrollbarRef" trigger="hover" style="width: 800px">
-              <div v-for="(item, index) in pptInfo.preview_url" :key="index"
+              <div v-for="(item, index) in ppt?.preview_url" :key="index"
                 :class="['img-item-box', { active: currentIndex === index }]"
                 @click="selectPreUrl($event, item, index)">
                 <el-image style="width: 160px; height: 90px" :src="item" fit />
@@ -27,25 +27,20 @@
       <div class="right">
         <!-- 操作区 -->
         <div class="top">
-          <h1>{{ pptInfo.name }}</h1>
+          <h1>{{ ppt?.name }}</h1>
           <div class="download-btn">
             <div class="button" @click="download">
-              <!-- 先判断是否是会员 -->
-              <template v-if="!membershipInfo.hasMembership || membershipInfo.isExpired">
-                <div v-if="!isPay" class="how-much">{{ Math.abs(pptInfo.payValue) || ''
-                  }}<img width="20" src="@/assets/images/jianB.png" alt="简币" /></div>
-              </template>
               <span>立即下载</span>
             </div>
           </div>
           <div class="views-downs-box">
             <div class="icon-box">
               <svg-icon icon-name="icon-xiazailiang" color="#a3abb1" size="22px"></svg-icon>
-              <span class="downloads">{{ pptInfo.downloads }}</span>
+              <span class="downloads">{{ ppt?.downloads }}</span>
             </div>
             <div class="icon-box">
               <svg-icon icon-name="icon-liulanliang1" color="#a3abb1" size="22px"></svg-icon>
-              <span class="number">{{ pptInfo.views }}</span>
+              <span class="number">{{ ppt?.views }}</span>
             </div>
           </div>
         </div>
@@ -54,30 +49,30 @@
           <h1>简历信息</h1>
           <div class="profile-box">
             <span class="label">简介</span>
-            <p>{{ pptInfo.profile }}</p>
+            <p>{{ ppt?.profile }}</p>
           </div>
           <div class="profile-box">
             <span class="label">类型</span>
-            <p>{{ pptInfo.effect }}PPT</p>
+            <p>{{ ppt?.effect }}PPT</p>
           </div>
           <div class="profile-box">
             <span class="label">比例</span>
-            <p>{{ pptInfo.proportion }}</p>
+            <p>{{ ppt?.proportion }}</p>
           </div>
           <div class="profile-box">
             <span class="label">页数</span>
-            <p>{{ pptInfo.pages }}页</p>
+            <p>{{ ppt?.pages }}页</p>
           </div>
           <div class="profile-box">
             <span class="label">分类</span>
-            <p v-for="(item, index) in pptInfo.category" :key="index" class="category">{{
+            <p v-for="(item, index) in ppt?.category" :key="index" class="category">{{
               getCategoryLabel(item)
             }}</p>
           </div>
           <div class="profile-box">
             <span class="label">标签</span>
             <div class="tags-box">
-              <p v-for="(item, index) in pptInfo.tags" :key="index" class="category">{{ item }}</p>
+              <p v-for="(item, index) in ppt?.tags" :key="index" class="category">{{ item }}</p>
             </div>
           </div>
         </div>
@@ -85,7 +80,7 @@
     </div>
     <div class="bottom-box">
       <!-- 轮播图 -->
-      <ppt-carousel v-if="pptInfo.preview_url" :preview-url-list="pptInfo.preview_url"></ppt-carousel>
+      <ppt-carousel v-if="ppt?.preview_url" :preview-url-list="ppt.preview_url"></ppt-carousel>
     </div>
 
     <!-- 下载警告弹窗 -->
@@ -98,53 +93,25 @@
 import PptCarousel from '@/components/ppt/PptCarousel.vue';
 import { downloadFileUtil } from '@/utils/common';
 import 'element-plus/es/components/message-box/style/index';
-import {
-  getPPTCategoryListAsync,
-  getPPTTemplateInfoAsync,
-  pptDownloadUrl
-} from '~/composables/api/pptTemplate';
 import { useUserIsPayGoods } from '~/composables/useUsrIsPayGoods';
-import { storeToRefs } from 'pinia';
-import { useMembershipStore } from '~/store/membership';
 import { ElMessage } from 'element-plus';
-import { useUserInfoStore } from '~/store/user';
-
-// 获取用户会员信息
-const { membershipInfo } = storeToRefs(useMembershipStore());
+import { fetchPptDownloadUrl, usePptCategories, usePptDetail } from '~/composables/ppt';
 
 // 获取ppt模板id
 const route = useRoute();
-const id = route.params.id;
+const id = route.params.id as string;
 const currentIndex = ref<number>(-1); // 选中哪一张预览图
 
 // 查询模板详细信息
-const pptInfo = ref<any>({});
-const getPPTTemplateInfo = async () => {
-  const data = await getPPTTemplateInfoAsync(id);
-  pptInfo.value = data;
-  bigPreviewUrl.value = pptInfo.value.preview_url[0];
-  currentIndex.value = 0;
-  // 设置seo
-  useHead({
-    title: pptInfo.value.name
-  });
-};
-getPPTTemplateInfo();
+const { ppt, loading} = usePptDetail(id);
 
 // 查询ppt模板分类列表
-const categoryList = ref<any>({});
-const getPPTCategoryList = async () => {
-  const data = await getPPTCategoryListAsync();
-  data.forEach((item: any) => {
-    categoryList.value[item.id] = item.name;
-  });
-};
-getPPTCategoryList();
+const { categories} = usePptCategories();
 
 // 返回分类名称
 const getCategoryLabel = (id: string) => {
-  if (categoryList.value) {
-    return categoryList.value[id];
+  if (categories.value) {
+    return categories.value.find((item: any) => item.id === id)?.name;
   }
 };
 
@@ -169,28 +136,7 @@ const dialogGetIntegralVisible = ref<boolean>(false);
 const confirmDisabled = ref<boolean>(false);
 const confirmTip = ref<string>('');
 const download = async () => {
-  // 会员直接下载
-  if (membershipInfo.value.hasMembership && !membershipInfo.value.isExpired) {
     downloadTemplate();
-    return;
-  }
-  // 判断用户是否支付过
-  if (isPay.value) {
-    downloadTemplate();
-  } else {
-    // 判断当前用户简币是否充足
-    const userIntegralTotal = useUserInfoStore().userIntegralInfo.integralTotal;
-    if (userIntegralTotal < Math.abs(pptInfo.value.payValue)) {
-      confirmDisabled.value = true;
-      dialogGetIntegralVisible.value = true;
-      confirmTip.value = '您的简币数量不足！';
-      return;
-    } else {
-      confirmTip.value = '';
-      dialogGetIntegralVisible.value = true;
-    }
-  }
-
 };
 
 // 关闭弹窗
@@ -206,11 +152,10 @@ const confirmDialog = () => {
 
 // 下载文件
 const downloadTemplate = async () => {
-  const data = await pptDownloadUrl(id);
+  const data = await fetchPptDownloadUrl({id});
   ElMessage.success('即将开始下载');
   let url = data[0];
   downloadFileUtil(url);
-  isPay.value = await useUserIsPayGoods(id); // 更新用户是否支付过的状态
 };
 </script>
 <style lang="scss" scoped>

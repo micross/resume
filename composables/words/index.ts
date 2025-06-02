@@ -78,7 +78,7 @@ export const useWordDetail = (id: string) => {
 };
 
 export const fetchWordDownloadUrl = async (data: { id: string }) => {
-    const response = await useAPI.get<Word>(`/resume/words/download/${data.id}`);
+    const response = await useAPI.get<string>(`/resume/words/download/${data.id}`);
     return response;
 };
 

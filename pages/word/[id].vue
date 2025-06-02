@@ -18,7 +18,7 @@
         <!-- 图片大图展示 -->
         <div class="img-big-preview">
           <div class="big-img-box">
-            <el-image style="width: 400px; height: 550px" :src="bigPreviewUrl" fit />
+            <el-image style="width: 400px; height: 550px" :src="word?.preview_url[0]" fit />
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@ import WordCarousel from '@/components/word/WordCarousel.vue';
 import { downloadFileUtil } from '@/utils/common';
 import { useUserIsPayGoods } from '~/composables/useUsrIsPayGoods';
 import { ElMessage } from 'element-plus';
-import { useWordCategories, useWordDetail, useWordDownload } from '~/composables/words';
+import { fetchWordDownloadUrl, useWordCategories, useWordDetail, useWordDownload } from '~/composables/words';
 
 // 获取word模板id
 const route = useRoute();
@@ -137,9 +137,8 @@ const confirmDialog = () => {
 };
 
 // 下载文件
-
 const downloadTemplate = async () => {
-  const {url, loading} = useWordDownload(id);
+  const url = await fetchWordDownloadUrl({id});
     ElMessage.success('即将开始下载');
     downloadFileUtil(url);
 };

@@ -61,7 +61,7 @@
   } from "vue";
   import { onClickOutside, tryOnMounted, whenever, useDebounceFn } from "@vueuse/core";
   import tinycolor, { type ColorInputWithoutInstance } from "tinycolor2";
-  import { ColorStop, GradientNode, parse, stringify } from "gradient-parser";
+  import { type ColorStop, type GradientNode, parse, stringify } from "gradient-parser";
   import { createPopper, Instance } from "@popperjs/core";
   import propTypes from "vue-types";
 

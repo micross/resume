@@ -39,8 +39,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { ColorPicker } from 'vue3-colorpicker';
-  import 'vue3-colorpicker/style.css';
+  import { ColorPicker } from "@makerbi/vue3-colorpicker";
+  import "@makerbi/vue3-colorpicker/dist/style.css";
 
   interface IColor {
     modelValue?: any;

@@ -19,8 +19,6 @@
 </template>
 <script lang="ts" setup>
   import { reactive, ref } from 'vue';
-  import { ColorPicker } from "@makerbi/vue3-colorpicker";
-  import "@makerbi/vue3-colorpicker/dist/style.css";
   defineProps<{
     modelValue: string;
   }>();

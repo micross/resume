@@ -6,7 +6,7 @@
     <div class="card-list">
       <template v-if="templates">
         <div v-for="(item, index) in templates" :key="index" class="card-list-item-box">
-          <template-card-new :card-data="item" @to-design="toDesign"> </template-card-new>
+          <TemplateCardNew :card-data="item" @to-design="toDesign"> </TemplateCardNew>
         </div>
       </template>
       <template v-else>

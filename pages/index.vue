@@ -17,8 +17,6 @@
     <WebData></WebData>
     <!-- footer -->
     <FooterCom></FooterCom>
-    <!-- 回到顶部 -->
-    <ElBacktop :right="50" :bottom="80" />
   </div>
 
   <!-- 公告弹窗 -->

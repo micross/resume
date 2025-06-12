@@ -16,10 +16,8 @@ const { isLoading } = storeToRefs(useLoadingStore());
 
 <template>
   <ElConfigProvider size="small" :locale="zhCn">
-    <ClientOnly>
       <NavBar bg-color="#fff" font-color="green" position="sticky" icon-color="green"></NavBar>
       <slot />
       <LoadingCom v-show="isLoading"></LoadingCom>
-    </ClientOnly>
   </ElConfigProvider>
 </template>

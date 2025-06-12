@@ -1,5 +1,5 @@
 <template>
-  <ElConfigProvider size="small" :locale="zhCn">
+  <TooltipProvider size="small" :locale="zhCn">
     <ClientOnly>
       <NavBar bg-color="#fff" font-color="green" position="sticky" icon-color="green"></NavBar>
       <div class="person-box">
@@ -22,7 +22,7 @@
         </div>
       </div>
     </ClientOnly>
-  </ElConfigProvider>
+  </TooltipProvider>
 </template>
 <script lang="ts" setup>
 import zhCn from 'element-plus/es/locale/lang/zh-cn';

@@ -10,8 +10,8 @@
     </div>
 
     <!-- 设置弹窗 -->
-    <online-setting-dialog :dialog-online-visible="dialogOnlineVisible" :row="cardData" @cancle="cancleSettingDialog"
-      @update-success="updateSuccess"></online-setting-dialog>
+    <OnlineSettingDialog :dialog-online-visible="dialogOnlineVisible" :row="cardData" @cancle="cancleSettingDialog"
+      @update-success="updateSuccess"></OnlineSettingDialog>
   </div>
 </template>
 <script setup lang="ts">

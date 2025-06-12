@@ -18,7 +18,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       403: () => err('没有权限访问该资源'),
       401: async () => {
         err('登录状态已过期，需要重新登录')
-        await nuxtApp.runWithContext(() => navigateTo('/'))
+        await nuxtApp.runWithContext(() => navigateTo('/auth/login'))
       },
     }
     handleMap[response.status] ? handleMap[response.status]() : err('未知错误！')

@@ -1,17 +1,24 @@
-<!-- 首页标题栏 -->
+<!-- 首页标题栏 - 使用Shadcn UI重构 -->
 <template>
   <div :class="['nav-bar-box', { 'background-nav': props.bgColor ? true : false }]">
     <logo-com :icon-color="iconColor ? iconColor : '#fff'" :font-color="fontColor ? fontColor : '#fff'"></logo-com>
     <div v-config:open_homne_menu class="center">
-      <ElMenu :default-active="route.path" class="el-menu-demo" mode="horizontal" :ellipsis="false" router
-        :popper-offset="10">
-        <template v-for="(item, index) in indexMenuList" :key="index">
-          <!-- 只显示启用中的 -->
-          <index-menu-item :item="item" :key-index="item.name + index" />
-        </template>
-      </ElMenu>
+      <div class="navigation-menu-wrapper">
+        <NavigationMenu :default-value="route.path">
+          <NavigationMenuList>
+            <template v-for="(item, index) in indexMenuList" :key="index">
+              <!-- 只显示启用中的 -->
+              <NavigationMenuItem>
+                <NavigationMenuLink  :href="item.path" :active="route.path === item.path">
+                  {{ item.title }}
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            </template>
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
     </div>
-    <!-- GitHub -->
+    <!-- 右侧功能区 -->
     <div class="right">
       <!-- 开通会员 -->
       <div v-config:open_membership class="membership-box" @click="toMembership">
@@ -37,10 +44,10 @@
       <div class="user-box">
         <div v-if="!useUserInfoStore().user" class="logon-register-box">
           <NuxtLink to="/auth/login">
-            <el-button type="primary" size="small" class="login-btn">登录</el-button>
+            <Button  size="sm" class="login-btn">登录</Button>
           </NuxtLink>
           <NuxtLink to="/auth/register">
-            <el-button type="primary" size="small" class="register-btn">注册</el-button>
+            <Button size="sm" class="register-btn">注册</Button>
           </NuxtLink>
         </div>
         <div v-else :class="[
@@ -51,22 +58,30 @@
           <div v-if="membershipInfo.hasMembership && !membershipInfo.isExpired" class="user-vip-icon">
             <img src="@/assets/images/membership.svg" alt="会员" title="会员" width="18" />
           </div>
-          <el-dropdown v-config:open_person_in :teleported="false">
-            <span class="el-dropdown-link">
-              <el-avatar v-if="useUserInfoStore().user.avatar" :size="45"
-                :src="useUserInfoStore().user.avatar" alt="用户头像" title="用户个人头像" />
-              <el-avatar v-else :size="45">
-                {{ useUserInfoStore().user.name }}
-              </el-avatar>
-            </span>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item @click="toPerson">个人中心</el-dropdown-item>
-                <el-dropdown-item @click="toMyIntegral"> 我的资产 </el-dropdown-item>
-                <el-dropdown-item @click="loginout">退出登录</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
+          <Tooltip>
+            <TooltipTrigger>
+              <Avatar 
+                v-if="useUserInfoStore().user.avatar" 
+                :src="useUserInfoStore().user.avatar" 
+                :size="45" 
+                :alt="useUserInfoStore().user.name" 
+                class="cursor-pointer"
+              />
+              <Avatar 
+                v-else 
+                :size="45" 
+                :fallback="useUserInfoStore().user.name" 
+                class="cursor-pointer"
+              />
+            </TooltipTrigger>
+            <TooltipContent>
+              <div class="dropdown-menu">
+                <div class="dropdown-item" @click="toPerson">个人中心</div>
+                <div class="dropdown-item" @click="toMyIntegral">我的资产</div>
+                <div class="dropdown-item" @click="loginout">退出登录</div>
+              </div>
+            </TooltipContent>
+          </Tooltip>
         </div>
       </div>
     </div>
@@ -74,10 +89,21 @@
 </template>
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import IndexMenuItem from '@/components/navbar/IndexMenuItem.vue';
 import { useMembershipStore } from '~/store/membership';
 import { useUserInfoStore } from '~/store/user';
 import { useRefreshStore } from '~/store/refresh';
+import { Button } from '@/components/ui/button';
+import { Avatar } from '@/components/ui/avatar';
+import { 
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList} from '@/components/ui/navigation-menu';
+import { 
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from '@/components/ui/tooltip';
 
 interface IBgcColor {
   bgColor?: string;
@@ -149,7 +175,6 @@ const loginout = () => {
   router.push('/');
 };
 
-
 </script>
 <style lang="scss" scoped>
 .background-nav {
@@ -157,7 +182,6 @@ const loginout = () => {
   backdrop-filter: blur(16px); // 增加模糊强度
   -webkit-backdrop-filter: blur(12px); // Safari 和其他 WebKit 浏览器
   background-color: rgba(255, 255, 255, 0.5); // 半透明背景（浅色）
-  // background-color: rgba(0, 0, 0, 0.3); // 半透明背景（深色）
 
   // 备用背景颜色（如果浏览器不支持毛玻璃效果）
   @supports not (backdrop-filter: blur(12px)) {
@@ -187,79 +211,41 @@ const loginout = () => {
     align-items: center;
     padding-left: 2vw;
 
-    .el-menu {
-      border: none;
-      height: 100%;
-      background-color: rgba(255, 255, 255, 0);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .el-menu-item {
-        height: 100%;
+    .navigation-menu-wrapper {
+      
+      :deep(.navigation-menu-list) {
         display: flex;
-        justify-content: center;
+        background-color: transparent;
+      }
+
+      :deep(.navigation-menu-item) {
+        display: flex;
         align-items: center;
-        width: 100%;
-        // 渐变字体
-        background: linear-gradient(45deg, #2ddd9d, #137c56); // 自定义渐变颜色
-        -webkit-background-clip: text; // Safari 和其他 WebKit 浏览器
-        background-clip: text;
-        padding: 0 15px !important;
+      }
+
+      :deep(.navigation-menu-link) {
+        display: flex;
+        align-items: center;
+        padding: 0 15px;
         letter-spacing: 3px;
         font-size: 16px;
+        font-weight: 550;
         border-bottom: 4px solid transparent;
         transition: all 0.3s;
+        // 渐变字体
+        background: linear-gradient(45deg, #2ddd9d, #137c56);
+        -webkit-background-clip: text;
+        background-clip: text;
         color: transparent;
-        font-weight: 550;
 
         &:hover {
           border-color: #2ddd9d;
           background-color: rgba(#ccc, 0.1);
         }
-      }
 
-      .el-sub-menu {
-        height: 100%;
-        // 渐变字体
-        background: linear-gradient(45deg, #2ddd9d, #137c56); // 自定义渐变颜色
-        -webkit-background-clip: text; // Safari 和其他 WebKit 浏览器
-        background-clip: text;
-        border-bottom: 4px solid transparent;
-        width: 136px;
-        color: transparent;
-        font-weight: 550;
-
-        &:hover {
+        &.active {
           border-bottom: 4px solid #2ddd9d !important;
-          background-color: rgba(#ccc, 0.1);
         }
-
-        :deep(.el-sub-menu__title) {
-          letter-spacing: 3px;
-          font-size: 16px;
-          // 渐变字体
-          background: linear-gradient(45deg, #2ddd9d, #137c56); // 自定义渐变颜色
-          -webkit-background-clip: text; // Safari 和其他 WebKit 浏览器
-          background-clip: text;
-          border: none;
-          color: transparent;
-          font-weight: 550;
-
-          &:hover {
-            background-color: rgba(#ccc, 0.1);
-          }
-
-          .el-sub-menu__icon-arrow {
-            color: #21a474;
-          }
-        }
-      }
-
-      .is-active {
-        background-color: rgba(255, 255, 255, 0);
-        // color: #21a474;
-        border-bottom: 4px solid #2ddd9d !important;
       }
     }
   }
@@ -267,118 +253,6 @@ const loginout = () => {
   .right {
     display: flex;
     align-items: center;
-
-    .attendance-total {
-      font-size: 12px;
-      color: v-bind('props.fontColor');
-      margin-right: 20px;
-      letter-spacing: 1px;
-      flex-shrink: 0;
-    }
-
-    .contact-me {
-      cursor: pointer;
-      margin-right: 15px;
-      font-size: 14px;
-      color: v-bind('props.iconColor');
-    }
-
-    .svg-icon {
-      cursor: pointer;
-    }
-
-    .attendance-box {
-      margin-right: 10px;
-      height: 28px;
-      flex-shrink: 0;
-
-      .button {
-        height: 100%;
-        padding: 6px 9px 6px 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        align-items: center;
-        border: 1px solid v-bind('props.fontColor');
-        text-align: center;
-        color: v-bind('props.fontColor');
-        letter-spacing: 4px;
-        font-size: 13px;
-        border-radius: 15px;
-        overflow: visible;
-        cursor: pointer;
-        -webkit-transition: all 0.2s;
-        -moz-transition: all 0.2s;
-        -ms-transition: all 0.2s;
-        transition: all 0.2s;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        transition: all 0.3s;
-
-        &:hover {
-          opacity: 0.7;
-        }
-      }
-
-      .have-attend {
-        border: 1px solid v-bind('props.fontColor');
-        color: v-bind('props.fontColor');
-        padding: 6px 9px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        letter-spacing: 4px;
-        font-size: 13px;
-        border-radius: 15px;
-        overflow: visible;
-      }
-    }
-
-    .get-source-code {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 10px;
-      cursor: pointer;
-      transition: all 0.3s;
-
-      &:hover {
-        opacity: 0.9;
-      }
-
-      .content-box {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 5px 10px;
-        background-color: #83ffd1;
-        border-radius: 15px;
-        font-size: 13px;
-
-        span {
-          font-size: 12px;
-          letter-spacing: 1px;
-          color: #617745;
-          margin: 2px 0 0 4px;
-        }
-
-        .svg-icon {
-          margin-right: 5px;
-        }
-      }
-
-      .expiredDays {
-        background-color: #3b7962;
-
-        span {
-          color: rgb(237, 218, 218);
-        }
-      }
-    }
 
     .membership-box {
       display: flex;
@@ -467,12 +341,16 @@ const loginout = () => {
       .logon-register-box {
         display: flex;
 
-        .el-button {
+        .login-btn,
+        .register-btn {
           display: flex;
           align-items: center;
           justify-content: center;
           height: 30px;
           width: 65px;
+          background-color: #2ddd9d;
+          color: #fff;
+          border: none;
         }
 
         .register-btn {
@@ -507,10 +385,6 @@ const loginout = () => {
           font-size: 20px;
           color: v-bind('nameColor');
           background-color: v-bind('iconColor');
-        }
-
-        .el-dropdown {
-          z-index: 1;
         }
       }
 
@@ -582,68 +456,20 @@ const loginout = () => {
     }
   }
 }
-</style>
-<style lang="scss">
-.navbar-popper-box {
-  // overflow: hidden;
-  border: none;
-  border-radius: 0;
 
-  .el-menu {
-    padding: 0;
-    min-width: 134px;
-
-    .el-menu-item {
-      height: 50px;
-      font-size: 14px;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      letter-spacing: 2px;
-    }
-
-    .el-sub-menu {
-      height: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      // 渐变字体
-      background: linear-gradient(45deg, #2ddd9d, #137c56); // 自定义渐变颜色
-      -webkit-background-clip: text; // Safari 和其他 WebKit 浏览器
-      background-clip: text;
-      padding: 0 15px !important;
-      letter-spacing: 3px;
-      font-size: 16px;
-      border-bottom: 4px solid transparent;
-      transition: all 0.3s;
-      color: transparent;
-      font-weight: 550;
-
-      &:hover {
-        background-color: rgba(#ccc, 0.1);
-      }
-
-      :deep(.el-sub-menu__title) {
-        letter-spacing: 3px;
-        font-size: 16px;
-        // 渐变字体
-        background: linear-gradient(45deg, #2ddd9d, #137c56); // 自定义渐变颜色
-        -webkit-background-clip: text; // Safari 和其他 WebKit 浏览器
-        background-clip: text;
-        border: none;
-        color: transparent;
-        font-weight: 550;
-
-        &:hover {
-          background-color: rgba(#ccc, 0.1);
-        }
-
-        .el-sub-menu__icon-arrow {
-          color: #21a474;
-        }
-      }
+// 下拉菜单样式
+.dropdown-menu {
+  min-width: 120px;
+  padding: 8px 0;
+  
+  .dropdown-item {
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    
+    &:hover {
+      background-color: rgba(#ccc, 0.1);
     }
   }
 }

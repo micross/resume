@@ -3,8 +3,8 @@
     <div v-if="!isShowSkeleton">
       <div v-if="legoCreateList.length" class="create-list-box">
         <template v-for="(item, index) in legoCreateList" :key="index">
-          <resume-card :card-data="item" type="new" @to-design="toDesign" @delete="deleteUserCreate">
-          </resume-card>
+          <ResumeCard :card-data="item" type="new" @to-design="toDesign" @delete="deleteUserCreate">
+          </ResumeCard>
         </template>
       </div>
 

@@ -46,7 +46,6 @@
 </template>
 
 <script lang="ts" setup>
-  import { closeGlobalLoading } from '@/utils/common';
   import HjButton1 from '@/components/HjButton/HjButton1/index.vue';
 
   const emit = defineEmits(['freeMake', 'seeMore']);
@@ -58,10 +57,6 @@
   const seeMore = () => {
     emit('seeMore');
   };
-
-  onUnmounted(() => {
-    closeGlobalLoading();
-  });
 </script>
 
 <style lang="scss" scoped>

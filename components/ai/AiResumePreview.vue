@@ -1,7 +1,7 @@
 <template>
   <div class="online-preview-box">
     <!-- 简历 -->
-    <div :key="refreshUuid" ref="html2Pdf" class="design">
+    <div ref="html2Pdf" class="design">
       <div ref="htmlContentPdf" class="design-content">
         <component :is="ResumePreviewCom" @content-height-change="contentHeightChange" />
       </div>
@@ -23,10 +23,7 @@
 <script lang="ts" setup>
   import { storeToRefs } from 'pinia';
   import ResumePreviewCom from './ResumePreviewCom.vue';
-import { useUuidStore } from '~/store/uuid';
 import { useResumeJsonNewStore } from '~/store/resume';
-
-  const { refreshUuid } = storeToRefs(useUuidStore());
   const { resumeJsonNewStore } = storeToRefs(useResumeJsonNewStore()); // store里的模板数据
 
   let lineRefs: Array<any> = []; // 分割线的ref

@@ -35,7 +35,7 @@
 <script lang="ts" setup>
 import NavBar from './components/NavBar.vue';
 import { storeToRefs } from 'pinia';
-import { closeGlobalLoading, getUuid } from '@/utils/common';
+import { getUuid } from '@/utils/common';
 import pageSchemas from '../createTemplate/designer/schema/pageSchema';
 import ResumeRender from '../createTemplate/designer/components/ResumeRender.vue';
 import PageEditorList from './components/PageEditorList.vue';
@@ -141,7 +141,6 @@ if (token.value) {
 onMounted(async () => {
   adjustZoomScale();
   window.addEventListener('resize', adjustZoomScale);
-  closeGlobalLoading(); // 闭全局等待层
 });
 
 onBeforeUnmount(() => {

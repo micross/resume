@@ -62,10 +62,6 @@ defineExpose({
   scrollIntoView
 });
 
-// 页面销毁
-onUnmounted(() => {
-  // closeGlobalLoading(); // 关闭全局等待层
-});
 </script>
 <style lang="scss">
 .template-select-box {

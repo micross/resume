@@ -17,8 +17,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { closeGlobalLoading } from '@/utils/common';
-
   const emit = defineEmits(['freeMake', 'customTemplate', 'webcode']);
   const freeMakeResume = () => {
     emit('freeMake');
@@ -34,11 +32,6 @@
   const toCustom = () => {
     emit('customTemplate');
   };
-
-  // 页面销毁
-  onUnmounted(() => {
-    closeGlobalLoading(); // 关闭全局等待层
-  });
 </script>
 <style lang="scss" scoped>
   .project-introduce-box {

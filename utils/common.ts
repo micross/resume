@@ -1,7 +1,6 @@
 import cuid2 from '@paralleldrive/cuid2';
 import dayjs from 'dayjs';
 import { cloneDeep } from 'lodash';
-import { useLoadingStore } from '~/store/loading';
 // 工具方法--px转数字
 export const pxTonumber = (value: string | undefined): number => {
   if (value) {
@@ -82,26 +81,6 @@ export const formatDateToYMD = (dateString: string): string => {
   } else {
     return '暂无数据';
   }
-};
-
-//
-
-// 开启全局等待层
-export const openGlobalLoading = () => {
-  const { changLoading } = useLoadingStore();
-  changLoading(true);
-};
-// 关闭全局等待层
-export const closeGlobalLoading = () => {
-  const { changLoading } = useLoadingStore();
-  changLoading(false);
-};
-// 先开启等待层，然后指定时间关闭等待层
-export const openAndCloseLoadingByTime = (time: number) => {
-  openGlobalLoading();
-  setTimeout(() => {
-    closeGlobalLoading();
-  }, time);
 };
 
 // 判断是否需要删除本地数据, 不是版本2的需要重置

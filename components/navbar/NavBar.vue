@@ -91,7 +91,6 @@
 import { storeToRefs } from 'pinia';
 import { useMembershipStore } from '~/store/membership';
 import { useUserInfoStore } from '~/store/user';
-import { useRefreshStore } from '~/store/refresh';
 import { Button } from '@/components/ui/button';
 import { Avatar } from '@/components/ui/avatar';
 import { 
@@ -164,13 +163,11 @@ const toMyIntegral = () => {
 
 // 退出登录
 const { setUser } = useUserInfoStore();
-const { setUuid } = useRefreshStore();
 const { saveIntegralInfo } = useUserInfoStore();
 const { saveMembershipInfo } = useMembershipStore();
 const loginout = () => {
   saveIntegralInfo(''); // 清除用户简币信息
   saveMembershipInfo(''); // 清除会员信息
-  setUuid(); // 全局刷新
   setUser(null);
   router.push('/');
 };

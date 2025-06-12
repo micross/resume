@@ -57,7 +57,6 @@
 <script setup lang="ts">
 import ResumePreview from '@/components/resume/ResumePreview.vue';
 import { storeToRefs } from 'pinia';
-import { openGlobalLoading } from '@/utils/common';
 import { useCreateTemplateStore } from '~/store/createTemplate';
 import { useTemplateDetail, useTemplates } from '~/composables/templates';
 
@@ -83,7 +82,6 @@ const handleClickTag = (key: string, value: any) => {
 
 // 点击使用该模版
 const handleToUse = () => {
-  openGlobalLoading(); // 等待动画层
   resetResumeJson(); // 重置json数据
   selectedModuleId.value = ''; // 重置选中模块
   router.push({

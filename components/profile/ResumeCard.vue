@@ -18,7 +18,6 @@
 import { ref } from 'vue';
 import { ElMessageBox } from 'element-plus';
 import 'element-plus/es/components/message-box/style/index';
-import { openGlobalLoading } from '@/utils/common';
 import { storeToRefs } from 'pinia';
 import { useCreateTemplateStore } from '~/store/createTemplate';
 
@@ -76,7 +75,6 @@ const toDesign = () => {
       }
     });
   } else {
-    openGlobalLoading(); // 等待动画层
     resetResumeJson(); // 重置json数据
     selectedModuleId.value = ''; // 重置选中模块
     router.push({

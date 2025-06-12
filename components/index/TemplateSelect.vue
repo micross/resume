@@ -6,7 +6,7 @@
     <div class="card-list">
       <template v-if="templates">
         <div v-for="(item, index) in templates" :key="index" class="card-list-item-box">
-          <TemplateCardNew :card-data="item" @to-design="toDesign"> </TemplateCardNew>
+          <TemplateCard :card-data="item" @to-design="toDesign"> </TemplateCard>
         </div>
       </template>
       <template v-else>
@@ -22,7 +22,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import TemplateCardNew from '@/components/TemplateCardNew/TemplateCardNew.vue';
+import TemplateCard from '@/components/template-card/TemplateCard.vue';
 import IntroduceTitleVue from './IntroduceTitle.vue';
 import { onUnmounted, ref } from 'vue';
 import SkeletonCard from '@/components/SkeletonCard/SkeletonCard.vue';

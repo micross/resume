@@ -2,17 +2,17 @@
   <div class="template-card-list-box">
     <div v-for="(item, index) in templateList" :key="index" class="card-box-item">
       <NuxtLink :to="`/resume/${item.id}`">
-        <TemplateCardNew :card-data="item"> </TemplateCardNew>
+        <TemplateCard :card-data="item"> </TemplateCard>
       </NuxtLink>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import type { ITempList } from '@/template/type';
-import TemplateCardNew from '@/components/TemplateCardNew/TemplateCardNew.vue';
+import TemplateCard from '@/components/template-card/TemplateCard.vue';
+import type { Template } from '~/lib/schema/template';
 
 defineProps<{
-  templateList: Array<ITempList>;
+  templateList: Template[];
 }>();
 
 </script>

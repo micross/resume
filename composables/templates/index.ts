@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/vue-query";
 import type { PageDto } from "~/lib/dto";
+import type { TemplateListDto } from "~/lib/dto/template";
 import type { Template } from "~/lib/schema/template";
 import { useCreateTemplateStore } from "~/store/createTemplate";
 
 export const fetchTemplates = async (data: PageDto) => {
-    const response = await useAPI.get<Template[]>("/resume/templates", data);
+    const response = await useAPI.get<TemplateListDto>("/resume/templates", data);
     return response;
 };
 

@@ -4,8 +4,8 @@
       subtitle-color="#7f8b96"></introduce-title-vue>
     <!-- 模板列表 -->
     <div class="card-list">
-      <template v-if="templates">
-        <div v-for="(item, index) in templates" :key="index" class="card-list-item-box">
+      <template v-if="templates?.templates">
+        <div v-for="(item, index) in templates?.templates" :key="index" class="card-list-item-box">
           <TemplateCard :card-data="item" @to-design="toDesign"> </TemplateCard>
         </div>
       </template>
@@ -31,8 +31,7 @@ import { useCreateTemplateStore } from '~/store/createTemplate';
 import { useTemplates } from '~/composables/templates';
 
 const { templates, loading } = useTemplates({
-  page: 1,
-  page_size: 12
+  limit: 12
 });
 
 // 跳转至设计页面

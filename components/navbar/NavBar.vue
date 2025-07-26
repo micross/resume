@@ -42,7 +42,7 @@
       </div>
       <!-- 登录注册以及用户展示区域 -->
       <div class="user-box">
-        <div v-if="!useUserInfoStore().user" class="logon-register-box">
+        <div v-if="!user" class="logon-register-box">
           <NuxtLink to="/auth/login">
             <Button  size="sm" class="login-btn">登录</Button>
           </NuxtLink>
@@ -61,16 +61,16 @@
           <Tooltip>
             <TooltipTrigger>
               <Avatar 
-                v-if="useUserInfoStore().user.avatar" 
-                :src="useUserInfoStore().user.avatar" 
+                v-if="user.avatar" 
+                :src="user.avatar" 
                 :size="45" 
-                :alt="useUserInfoStore().user.name" 
+                :alt="user.name" 
                 class="cursor-pointer"
               />
               <Avatar 
                 v-else 
                 :size="45" 
-                :fallback="useUserInfoStore().user.name" 
+                :fallback="user.name" 
                 class="cursor-pointer"
               />
             </TooltipTrigger>
@@ -162,13 +162,8 @@ const toMyIntegral = () => {
 };
 
 // 退出登录
-const { setUser } = useUserInfoStore();
-const { saveIntegralInfo } = useUserInfoStore();
-const { saveMembershipInfo } = useMembershipStore();
+const { user, setUser } = useUserInfoStore();
 const loginout = () => {
-  saveIntegralInfo(''); // 清除用户简币信息
-  saveMembershipInfo(''); // 清除会员信息
-  setUser(null);
   router.push('/');
 };
 

@@ -43,8 +43,8 @@
                 size="14px"></svg-icon></span>
           </div>
           <!-- 热门模版列表 -->
-          <div class="template-list-box" v-if="templates">
-            <div v-for="(item, index) in templates" :key="index" class="template-card" @click="toResumeDetail(item)">
+          <div class="template-list-box" v-if="templates?.templates">
+            <div v-for="(item, index) in templates.templates" :key="index" class="template-card" @click="toResumeDetail(item)">
               <img :src="item.template_cover" :alt="item.template_title" />
             </div>
           </div>
@@ -116,8 +116,7 @@ const toMore = () => {
 
 
 const { templates } = useTemplates({
-  page: 1,
-  page_size: 12
+  limit: 12
 });
 
 

@@ -15,3 +15,11 @@ export const createTemplateSchema = v.partial(v.pick(templateSchema, [
 ]));
 
 export class TemplateDto extends createDto(createTemplateSchema) {}
+
+export const templateListSchema = v.object({
+    next_page: v.optional(v.string()),
+    prev_page: v.optional(v.string()),
+    templates: v.array(templateSchema)
+});
+
+export class TemplateListDto extends createDto(templateListSchema) {}
